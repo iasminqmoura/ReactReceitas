@@ -1,16 +1,21 @@
 import React from 'react';
+import styled from 'styled-components/native';
 import Colors from '../common/colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { FlatList } from 'react-native';
+import { View, Text, FlatList, Image } from 'react-native';
 import { CuteContainer, CuteLabel, CuteImage, CuteTouchable } from '../cute/styles';
+import { Recipe, Ingredient, IngredientAmount, FoodType } from '../models/food';
+import { FoodTypes, Recipes } from '../common/data';
 
 export default class MainPage extends React.Component {
     constructor(props: Readonly<{}>) { 
         super(props);
     }
 
-    onItemClick(item: any) {
-        console.log('click!');
+    onItemClick(item: Recipe) {
+        let navigation = (this.props as any).navigation;
+        navigation.navigate('Recipe', item);
     }
 
     render() {
@@ -21,7 +26,7 @@ export default class MainPage extends React.Component {
                     <CuteLabel foreground={Colors.primary.foreground} fontSize={28} fontWeight="bold">tasty recipes</CuteLabel>
                 </CuteContainer>
                 <CuteContainer>
-                    <FlatList<any> horizontal={true} data={[]} renderItem={({item, index}) => (
+                    <FlatList<FoodType> horizontal={true} data={FoodTypes} renderItem={({item, index}) => (
                         <CuteTouchable key={`key-${item.id}`} align="center"
                                        m={index == 0 ? "0 32px 16px 32px" : "0 32px 16px 0"}>
                             <CuteContainer w="48" h="48" borderRadius="24" justify="center" align="center" background={Colors.surface.background}>
@@ -32,7 +37,7 @@ export default class MainPage extends React.Component {
                     />
                 </CuteContainer>
                 <CuteContainer>
-                        <FlatList<any> horizontal={true} data={[]} renderItem={({item, index}) => (
+                        <FlatList<Recipe> horizontal={true} data={Recipes} renderItem={({item, index}) => (
                             <CuteTouchable key={`key-${item.id}`} background={Colors.surface.background} w="256" h="400" borderRadius="32"
                                            m={index == 0 ? "64px 48px 16px 48px" : "64px 48px 16px 0"}
                                            onPress={(event: any) => this.onItemClick(item)}>

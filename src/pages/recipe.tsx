@@ -1,18 +1,21 @@
 import React from 'react';
+import styled from 'styled-components/native';
 import Colors from '../common/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { FlatList } from 'react-native';
+import { View, Text, FlatList, Image } from 'react-native';
 import { CuteContainer, CuteLabel, CuteImage, CuteTouchable } from '../cute/styles';
+import { Recipe, Ingredient, IngredientAmount, FoodType } from '../models/food';
+import { FoodTypes, Recipes } from '../common/data';
 
 export default class RecipePage extends React.Component {
-    recipe: any;
+    recipe: Recipe;
 
     constructor(props: Readonly<{}>) { 
         super(props);
 
         let route = (this.props as any).route;
-        this.recipe = route.params;
+        this.recipe = route.params as Recipe;
     }
 
     onBackButtonPress() {
@@ -79,7 +82,7 @@ export default class RecipePage extends React.Component {
                     </CuteContainer>
 
                     <CuteLabel fontSize={16} fontWeight="bold" foreground={Colors.surface.foreground} p="32px 0 16px 0">Ingredients</CuteLabel>
-                    <FlatList<any> style={{ flex: 1 }} data={this.recipe.ingredients} renderItem={({item, index}) => (
+                    <FlatList<IngredientAmount> style={{ flex: 1 }} data={this.recipe.ingredients} renderItem={({item, index}) => (
                         <CuteContainer key={`key-${item.id}`}>
                             { index != 0
                                 ?  <CuteContainer h="1" m="8px" background={Colors.surface.foreground} />
@@ -99,3 +102,7 @@ export default class RecipePage extends React.Component {
         );
     }
 }
+/*
+
+
+*/
